@@ -108,16 +108,16 @@ VLC_API void libvlc_Quit( libvlc_int_t * );
  * \param item meta informations
  * \param fmt format string
  * \param args format string arguments
- */
-typedef void (*vlc_log_cb) (void *data, int type, const vlc_log_t *item,
+ *
+  typedef void (*vlc_log_cb) (void *data, int type, const *item,
                             const char *fmt, va_list args);
-
-VLC_API void vlc_LogSet(libvlc_int_t *, vlc_log_cb cb, void *data);
-
-typedef struct msg_subscription { } msg_subscription_t;
+  */
+//VLC_API void vlc_LogSet(libvlc_int_t *, vlc_log_cb cb, void *data);
+  
+  //typedef struct msg_subscription { } msg_subscription_t;
 #define vlc_Subscribe(sub,cb,data) ((sub), (cb), (data))
 #define vlc_Unsubscribe(sub) ((void)(sub))
-
+  
 /*@}*/
 
 #if defined( _WIN32 ) && !VLC_WINSTORE_APP
