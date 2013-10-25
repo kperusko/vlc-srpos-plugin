@@ -1,0 +1,51 @@
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.64)
+AC_INIT([libsrpos_plugin], [0.3], [artemsen@gmail.com], [], [http://code.google.com/p/vlc-srpos-plugin])
+AM_INIT_AUTOMAKE([-Wall -Werror])
+AC_CONFIG_SRCDIR([srpos.c])
+
+LT_INIT([dlopen win32-dll shared disable-static])
+
+AC_CANONICAL_HOST
+AC_PROG_CC
+AC_PROG_CC_C99
+AC_C_CONST
+
+# Check for some target-specific stuff
+test -z "${WIN32}" && WIN32="no"
+case "${build}" in
+  *-mingw32*)
+    WIN32="yes"
+  ;;
+esac
+
+AC_ARG_WITH([vlc-include-path],
+  [AS_HELP_STRING([--with-vlc-include-path],
+    [location of the VLC SDK headers, defaults to /usr/include/vlc/plugins])],
+  [CPPFLAGS="$CPPFLAGS -I$withval"],
+  [CPPFLAGS="$CPPFLAGS -I/usr/include/vlc/plugins"])
+
+AC_ARG_WITH([vlc-lib-path],
+  [AS_HELP_STRING([--with-vlc-lib-path],
+    [location of the vlccore library])],
+  [LDFLAGS="$LDFLAGS -L$withval"],
+  [])
+
+AC_ARG_WITH([vlc-plugin-path],
+  [AS_HELP_STRING([--with-vlc-plugin-path],
+    [location of the VLC plugin modules, defaults to /usr/lib/vlc/plugins])],
+  [pluginslibdir="$withval"],
+  [pluginslibdir="/usr/lib/vlc/plugins"])
+AC_SUBST(pluginslibdir)
+
+AC_HEADER_STDC
+AC_CHECK_HEADER([vlc_plugin.h], [], [AC_MSG_ERROR(VLC plugin headers not found)])
+AC_CHECK_LIB([vlccore], [main], [], [AC_MSG_ERROR(VLC vlccore library not found)])
+
+AS_IF([test "${WIN32}"="yes"],
+  [LDFLAGS="$LDFLAGS -static-libgcc"]
+)
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT

@@ -1,0 +1,12 @@
+libsrpos_plugin 0.3 2013-10-04
+------------------------------
+ * support to rememeber up to 100 last files position
+ * VLC 2.1 (Windows build)
+
+libsrpos_plugin 0.2 2012-11-15
+------------------------------
+ * support to rememeber up to 10 last files position
+
+libsrpos_plugin 0.1 2012-11-10
+------------------------------
+ * first official release! :-)
